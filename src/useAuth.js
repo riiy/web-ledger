@@ -3,9 +3,8 @@ import * as React from "react";
 import { parseJwt } from './utils/str_utils'
 import { Navigate, useLocation } from 'react-router-dom'
 
-
-async function fetchGraphQL(operationsDoc, operationName, variables) {
-  const result = await fetch(
+function fetchGraphQL(operationsDoc, operationName, variables) {
+  return fetch(
     process.env.REACT_APP_BACKEND_URL,
     {
       method: "POST",
@@ -15,15 +14,20 @@ async function fetchGraphQL(operationsDoc, operationName, variables) {
         operationName: operationName
       })
     }
-  );
-
-  return await result.json();
+  ).then((result) => result.json());
 }
-
 const operationsDoc = `
   mutation Login($email: String = "", $password: String = "") {
     Login(email: $email, password: $password) {
       token
+    }
+  }
+`;
+
+const signupOperationsDoc = `
+  mutation Signup($email: String = "admin@qq.com", $password: String = "qqcom") {
+    Signup(email: $email, password: $password) {
+      email
     }
   }
 `;
@@ -33,6 +37,14 @@ export function executeLogin(email, password) {
     operationsDoc,
     "Login",
     { "email": email, "password": password }
+  );
+}
+
+export function executeSignup(email, password) {
+  return fetchGraphQL(
+    signupOperationsDoc,
+    "Signup",
+    {"email": email, "password": password}
   );
 }
 
