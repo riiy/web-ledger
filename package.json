@@ -13,6 +13,7 @@
     "graphql": "^16.2.0",
     "react": "latest",
     "react-dom": "latest",
+    "react-hotkeys": "^2.0.0",
     "react-router-dom": "6",
     "react-scripts": "latest",
     "recharts": "^2.1.8",
