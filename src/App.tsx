@@ -8,8 +8,10 @@ import { RequireAuth } from './useAuth'
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import TextField from '@mui/material/TextField';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import DatePicker from '@mui/lab/DatePicker';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -27,6 +29,16 @@ export default function App() {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const [value, setValue] = React.useState<Date | null>(null);
+
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+        // eslint-disable-next-line no-console
+        console.log({
+            date: data.get('date'),
+        });
+    }
     return (
         <Hotkeys
             keyName="shift+a,alt+s"
@@ -38,17 +50,25 @@ export default function App() {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-        <Box component="form" noValidate onSubmit={handleClose} sx={{ mt: 3 }}>
-                <LocalizationProvider dateAdapter={AdapterDateFns}>...</LocalizationProvider>
-
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Submit
-          </Button>
+                <Box component="form" noValidate onSubmit={handleSubmit} sx={style}>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <DatePicker
+                            label="Trans Date"
+                            value={value}
+                            onChange={(newValue) => {
+                                setValue(newValue);
+                            }}
+                            renderInput={(params) => <TextField id="date" name="date" {...params} />}
+                        />
+                    </LocalizationProvider>
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2 }}
+                    >
+                        Submit
+                    </Button>
                 </Box>
             </Modal>
             <div className="App">
