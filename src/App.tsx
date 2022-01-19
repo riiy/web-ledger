@@ -12,6 +12,19 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import TextField from '@mui/material/TextField';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import DatePicker from '@mui/lab/DatePicker';
+import frLocale from 'date-fns/locale/fr';
+import ruLocale from 'date-fns/locale/ru';
+import deLocale from 'date-fns/locale/de';
+import enLocale from 'date-fns/locale/en-US';
+import zhCNLocale from 'date-fns/locale/en-US';
+const localeMap = {
+  en: enLocale,
+  fr: frLocale,
+  ru: ruLocale,
+  de: deLocale,
+    zh: zhCNLocale,
+};
+
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -53,6 +66,8 @@ export default function App() {
                 <Box component="form" noValidate onSubmit={handleSubmit} sx={style}>
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                         <DatePicker
+                        inputFormat="yyyy-MM-dd"
+                        mask='____-__-__'
                             label="Trans Date"
                             value={value}
                             onChange={(newValue) => {
