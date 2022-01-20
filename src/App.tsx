@@ -12,18 +12,8 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import TextField from '@mui/material/TextField';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import DatePicker from '@mui/lab/DatePicker';
-import frLocale from 'date-fns/locale/fr';
-import ruLocale from 'date-fns/locale/ru';
-import deLocale from 'date-fns/locale/de';
-import enLocale from 'date-fns/locale/en-US';
-import zhCNLocale from 'date-fns/locale/en-US';
-const localeMap = {
-  en: enLocale,
-  fr: frLocale,
-  ru: ruLocale,
-  de: deLocale,
-    zh: zhCNLocale,
-};
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 
 
 const style = {
@@ -40,7 +30,10 @@ const style = {
 
 export default function App() {
     const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
+    const handleOpen = () => {
+        setOpen(true);
+        setStatus("*");
+    }
     const handleClose = () => setOpen(false);
     const [value, setValue] = React.useState<Date | null>(null);
 
@@ -50,8 +43,15 @@ export default function App() {
         // eslint-disable-next-line no-console
         console.log({
             date: data.get('date'),
+            status
         });
     }
+    const [status, setStatus] = React.useState('');
+
+    const handleChange = (event: SelectChangeEvent) => {
+        setStatus(event.target.value as string);
+    };
+
     return (
         <Hotkeys
             keyName="shift+a,alt+s"
@@ -66,8 +66,8 @@ export default function App() {
                 <Box component="form" noValidate onSubmit={handleSubmit} sx={style}>
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                         <DatePicker
-                        inputFormat="yyyy-MM-dd"
-                        mask='____-__-__'
+                            inputFormat="yyyy-MM-dd"
+                            mask='____-__-__'
                             label="Trans Date"
                             value={value}
                             onChange={(newValue) => {
@@ -76,6 +76,18 @@ export default function App() {
                             renderInput={(params) => <TextField id="date" name="date" {...params} />}
                         />
                     </LocalizationProvider>
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={status}
+                        label="Status"
+                        autoWidth
+                        onChange={handleChange}
+                    >
+                        <MenuItem value={"*"}>cleared</MenuItem>
+                        <MenuItem value={"!"}>pending</MenuItem>
+                        <MenuItem value={""}>unmarked</MenuItem>
+                    </Select>
                     <Button
                         type="submit"
                         fullWidth
