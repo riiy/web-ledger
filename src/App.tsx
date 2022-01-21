@@ -54,7 +54,7 @@ export default function App() {
 
     return (
         <Hotkeys
-            keyName="shift+a,alt+s"
+            keyName="shift+n,alt+s"
             onKeyUp={handleOpen}
         >
             <Modal
