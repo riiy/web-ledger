@@ -6,7 +6,6 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import MuiDrawer from '@mui/material/Drawer';
 import { styled, } from '@mui/material/styles';
 const drawerWidth: number = 240;
 interface AppBarProps extends MuiAppBarProps {

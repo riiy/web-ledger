@@ -5,15 +5,8 @@ import SignIn from "./pages/auth/SignIn"
 import SignUp from "./pages/auth/SignUp"
 import Dashboard from "./pages/dashboard/Dashboard"
 import { RequireAuth } from './useAuth'
-import Modal from '@mui/material/Modal';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import TextField from '@mui/material/TextField';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import DatePicker from '@mui/lab/DatePicker';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
+import { ApolloClient, ApolloProvider, InMemoryCache, HttpLink } from '@apollo/client';
+import AddTransactions from './AddTransction'
 
 
 const style = {
@@ -28,91 +21,48 @@ const style = {
     p: 4,
 };
 
+
+const createApolloClient = (authToken: string | null) => {
+    return new ApolloClient({
+        link: new HttpLink({
+            uri: process.env.REACT_APP_BACKEND_URL,
+            headers: {
+                Authorization: `Bearer ${authToken}`
+            }
+        }),
+        cache: new InMemoryCache(),
+    });
+};
 export default function App() {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => {
         setOpen(true);
-        setStatus("*");
     }
-    const handleClose = () => setOpen(false);
-    const [value, setValue] = React.useState<Date | null>(null);
-
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        // eslint-disable-next-line no-console
-        console.log({
-            date: data.get('date'),
-            status
-        });
-    }
-    const [status, setStatus] = React.useState('');
-
-    const handleChange = (event: SelectChangeEvent) => {
-        setStatus(event.target.value as string);
-    };
-
+    const idToken = localStorage.getItem('token')
+    const [client] = React.useState(createApolloClient(idToken));
     return (
-        <Hotkeys
-            keyName="shift+n,alt+s"
-            onKeyUp={handleOpen}
-        >
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
+        <ApolloProvider client={client}>
+            <Hotkeys
+                keyName="shift+n,alt+s"
+                onKeyUp={handleOpen}
             >
-                <Box component="form" noValidate onSubmit={handleSubmit} sx={style}>
-                    <LocalizationProvider dateAdapter={AdapterDateFns}>
-                        <DatePicker
-                            inputFormat="yyyy-MM-dd"
-                            mask='____-__-__'
-                            label="Trans Date"
-                            value={value}
-                            onChange={(newValue) => {
-                                setValue(newValue);
-                            }}
-                            renderInput={(params) => <TextField id="date" name="date" {...params} />}
+                <AddTransactions open={open} setOpen={setOpen} />
+                <div className="App">
+                    <Routes>
+                        <Route path="/" element={<Dashboard />} />
+                        <Route path="/signin" element={<SignIn />} />
+                        <Route path="/signup" element={<SignUp />} />
+                        <Route
+                            path="/dashboard"
+                            element={
+                                <RequireAuth>
+                                    <Dashboard />
+                                </RequireAuth>
+                            }
                         />
-                    </LocalizationProvider>
-                    <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={status}
-                        label="Status"
-                        autoWidth
-                        onChange={handleChange}
-                    >
-                        <MenuItem value={"*"}>cleared</MenuItem>
-                        <MenuItem value={"!"}>pending</MenuItem>
-                        <MenuItem value={""}>unmarked</MenuItem>
-                    </Select>
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                    >
-                        Submit
-                    </Button>
-                </Box>
-            </Modal>
-            <div className="App">
-                <Routes>
-                    <Route path="/" element={<Dashboard />} />
-                    <Route path="/signin" element={<SignIn />} />
-                    <Route path="/signup" element={<SignUp />} />
-                    <Route
-                        path="/dashboard"
-                        element={
-                            <RequireAuth>
-                                <Dashboard />
-                            </RequireAuth>
-                        }
-                    />
-                </Routes>
-            </div>
-        </Hotkeys>
+                    </Routes>
+                </div>
+            </Hotkeys>
+        </ApolloProvider>
     );
 }
