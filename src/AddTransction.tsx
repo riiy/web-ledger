@@ -9,6 +9,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Modal from '@mui/material/Modal';
 import AccountList from './AccountList'
+import { useMutation, gql } from '@apollo/client';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -22,6 +23,23 @@ const style = {
     p: 4,
 };
 
+const MY_MUTATION_MUTATION = gql`
+  mutation MyMutation($comment: String = "", $payee_payer: String = "", $status: bpchar = "", $tags: jsonb = "", $trans_date: date = "", $postings: postings_arr_rel_insert_input = {data: {account_id: "", currency_id: "", quantity: ""}, on_conflict: {constraint: postings_pkey, update_columns: account_id}}) {
+    insert_transactions(objects: {comment: $comment, payee_payer: $payee_payer, tags: $tags, status: $status, trans_date: $trans_date, postings: $postings}) {
+      affected_rows
+      returning {
+        id
+        trans_date
+      }
+    }
+  }
+`;
+
+interface posting {
+    account_id: string,
+    currency_id: string,
+    quantify: number
+}
 export default function AddTransactions(props: any) {
     const { open, setOpen } = props;
     const handleClose = () => setOpen(false);
@@ -30,13 +48,24 @@ export default function AddTransactions(props: any) {
     const [date, setDate] = React.useState<Date | null>(new Date());
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
+        const form_data = new FormData(event.currentTarget);
+
         console.log({
-            date: data.get('date'),
+            date: form_data.get('date'),
             status,
-            account
+            account_id: account
         });
+        insert_transaction();
     }
+        const comment = 'comment';
+        const payee_payer = 'pdd';
+        const tags = {"key": "value"}
+        const currency_id = '473b25e3-7cbf-494d-8926-1cc03506706e'
+        const quantity = 99
+        const postings_list = {data: [{account_id: account, currency_id, quantity}, {account_id: account, currency_id, quantity}]}
+        const [insert_transaction, { error, data }] = useMutation(MY_MUTATION_MUTATION, {
+            variables: {comment, payee_payer, status,tags, trans_date:date, postings:postings_list}
+        });
     return (
         <Modal
             open={open}
