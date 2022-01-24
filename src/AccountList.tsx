@@ -2,44 +2,15 @@ import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
-
-import { useQuery, gql } from '@apollo/client';
-
-const QUERY_ACCOUNTS = gql`
-  query ACCOUNTS {
-    accounts {
-      id
-      alias_name
-      name
-      default_commodity
-      postings {
-        quantity
-        updated_at
-      }
-    }
-  }
-`;
-interface Postings {
-    quantity: Number;
-    update_at: string;
-}
-interface Accounts {
-    id: string;
-    alias_name: string;
-    name: string;
-    default_commodity: string;
-    postings: Postings[];
-}
-
-interface AccountsData {
-    accounts: Accounts[];
-}
-
+import { useAccountsQuery, AccountsQuery } from './generated/graphql'
 export default function AccountsList(props: any) {
     const [open, setOpen] = React.useState(false);
-    const [options, setOptions] = React.useState<readonly Accounts[]>([]);
+    const [options, setOptions] = React.useState<AccountsQuery["accounts"]>([]);
     const loading = open && options.length === 0;
-    const { data } = useQuery<AccountsData>(QUERY_ACCOUNTS);
+    const { data } = useAccountsQuery({
+        variables: {
+        },
+    });
     React.useEffect(() => {
         let active = true;
         if (!loading) {
@@ -76,7 +47,7 @@ export default function AccountsList(props: any) {
             getOptionLabel={(option) => option.name}
             options={options}
             loading={loading}
-            onChange={(event: any, newValue: Accounts | null) => {props.setAccount(newValue?.id)}}
+            onChange={(event: any, newValue: any | null) => { props.setAccount(newValue?.id) }}
             renderInput={(params) => (
                 <TextField
                     {...params}
