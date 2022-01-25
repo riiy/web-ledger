@@ -8,8 +8,8 @@ import DatePicker from '@mui/lab/DatePicker';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Modal from '@mui/material/Modal';
-import AccountList from './AccountList'
-import { useInsertTransactionMutation } from './generated/graphql'
+import { Postings_Arr_Rel_Insert_Input, useInsertTransactionMutation } from './generated/graphql'
+import Postings from './Postings';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -27,8 +27,10 @@ export default function AddTransactions(props: any) {
     const { open, setOpen } = props;
     const handleClose = () => setOpen(false);
     const [status, setStatus] = React.useState('*');
-    const [account, setAccount] = React.useState('');
     const [date, setDate] = React.useState<Date | null>(new Date());
+    const [postings, setPostings] = React.useState<Postings_Arr_Rel_Insert_Input['data']>([])
+    const [payee_payer, setPayee] = React.useState('pdd');
+    const [comment, setComment] = React.useState('comment');
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const form_data = new FormData(event.currentTarget);
@@ -36,18 +38,12 @@ export default function AddTransactions(props: any) {
         console.log({
             date: form_data.get('date'),
             status,
-            account_id: account
         });
         insert_transaction();
     }
-    const comment = 'comment';
-    const payee_payer = 'pdd';
     const tags = { "key": "value" }
-    const currency_id = '473b25e3-7cbf-494d-8926-1cc03506706e'
-    const quantity = 99
-    const postings_list = { data: [{ account_id: account, currency_id, quantity: -99 }, { account_id: account, currency_id, quantity }] }
     const [insert_transaction, { error, data }] = useInsertTransactionMutation({
-        variables: { comment, payee_payer, status, tags, trans_date: date, postings: postings_list }
+        variables: { comment, payee_payer, status, tags, trans_date: date, postings: { data: postings } }
     });
     return (
         <Modal
@@ -59,7 +55,24 @@ export default function AddTransactions(props: any) {
             <Box component="form" noValidate onSubmit={handleSubmit} sx={style}>
                 <LocalDatePicker date={date} setDate={setDate} />
                 <StatusSelect status={status} setStatus={setStatus} />
-                <AccountList setAccount={setAccount} />
+
+                <TextField
+                    hiddenLabel
+                    id="filled-hidden-label-small"
+                    defaultValue="payee/payer"
+                    variant="filled"
+                    size="small"
+                    onChange={(e: any) => { setPayee(e.target.value) }}
+                />
+                <TextField
+                    hiddenLabel
+                    id="filled-hidden-label-small"
+                    defaultValue="Comments"
+                    variant="filled"
+                    size="small"
+                    onChange={(e: any) => { setComment(e.target.value) }}
+                />
+                <Postings setPostings={setPostings} />
                 <Button
                     type="submit"
                     fullWidth
