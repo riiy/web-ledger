@@ -3,10 +3,12 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useAccountsQuery, AccountsQuery } from './generated/graphql'
+import Box from '@mui/material/Box';
 export default function AccountsList(props: any) {
     const [open, setOpen] = React.useState(false);
     const [options, setOptions] = React.useState<AccountsQuery["accounts"]>([]);
     const loading = open && options.length === 0;
+    const [account, setAccount] = React.useState('');
     const { data } = useAccountsQuery({
         variables: {
         },
@@ -32,9 +34,17 @@ export default function AccountsList(props: any) {
             setOptions([]);
         }
     }, [open]);
+    let account_cnt: number = parseInt(props.cnt) + 1
     return (
+        <Box>
+        <input
+        value={account}
+        hidden
+        name={"account-" + props.cnt}
+        onChange={()=>{}}
+        />
         <Autocomplete
-            id="asynchronous-demo"
+            id={account}
             sx={{ width: 300 }}
             open={open}
             onOpen={() => {
@@ -47,11 +57,11 @@ export default function AccountsList(props: any) {
             getOptionLabel={(option) => option.name}
             options={options}
             loading={loading}
-            onChange={(event: any, newValue: any | null) => { props.setAccount(newValue?.id) }}
+            onChange={(event: any, newValue: any | null) => { setAccount(newValue?.id) }}
             renderInput={(params) => (
                 <TextField
                     {...params}
-                    label="Asynchronous"
+                    label={"Account " + account_cnt}
                     InputProps={{
                         ...params.InputProps,
                         endAdornment: (
@@ -64,5 +74,6 @@ export default function AccountsList(props: any) {
                 />
             )}
         />
+        </Box>
     )
 }

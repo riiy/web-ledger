@@ -8,7 +8,7 @@ import DatePicker from '@mui/lab/DatePicker';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Modal from '@mui/material/Modal';
-import { Postings_Arr_Rel_Insert_Input, useInsertTransactionMutation } from './generated/graphql'
+import { useInsertTransactionMutation } from './generated/graphql'
 import Postings from './Postings';
 
 const style = {
@@ -28,17 +28,16 @@ export default function AddTransactions(props: any) {
     const handleClose = () => setOpen(false);
     const [status, setStatus] = React.useState('*');
     const [date, setDate] = React.useState<Date | null>(new Date());
-    const [postings, setPostings] = React.useState<Postings_Arr_Rel_Insert_Input['data']>([])
+    const [postingCnt, setPostingCnt] = React.useState(1)
     const [payee_payer, setPayee] = React.useState('pdd');
     const [comment, setComment] = React.useState('comment');
+    const postings: any[] = [];
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const form_data = new FormData(event.currentTarget);
-
-        console.log({
-            date: form_data.get('date'),
-            status,
-        });
+        for (let i = 0; i < postingCnt + 1; i++) {
+            postings.push({ account_id: form_data.get('account-' + i), quantity: form_data.get('quantity-' + i) })
+        }
         insert_transaction();
     }
     const tags = { "key": "value" }
@@ -72,7 +71,7 @@ export default function AddTransactions(props: any) {
                     size="small"
                     onChange={(e: any) => { setComment(e.target.value) }}
                 />
-                <Postings setPostings={setPostings} />
+                <Postings setPostingCnt={setPostingCnt} />
                 <Button
                     type="submit"
                     fullWidth
