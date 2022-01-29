@@ -1,13 +1,13 @@
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
-import { Typography } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 import AccountList from './AccountList';
 
 import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 export default function Postings(props: any) {
 
-    const [values, setValues] = React.useState<string[]>([]);
+    const [values, setValues] = React.useState<string[]>(["", ""]);
 
     const handleChange = (index: number, e: any) => {
         const updatedValues = values.map((value, i) => {
@@ -28,22 +28,25 @@ export default function Postings(props: any) {
     return (
         <Typography>
             {values.map((jump, index) => (
-                <Box>
-                    <AccountList cnt={index} />
-                    <TextField
-                        hiddenLabel
-                        key={index}
-                        id={"quantity-" + index}
-                        value={jump || ""}
-                        defaultValue="Quantity"
-                        variant="filled"
-                        size="small"
-                        onChange={(e: any) => { handleChange(index, e) }}
-                        name={"quantity-" + index}
-                    />
-                </Box>
+                <Grid container spacing={2}>
+                    <Grid item xs={8}>
+                        <AccountList cnt={index} />
+                    </Grid>
+                    <Grid item xs={4}>
+                        <TextField
+                            hiddenLabel
+                            key={index}
+                            id={"quantity-" + index}
+                            value={jump || ""}
+                            onChange={(e: any) => { handleChange(index, e) }}
+                            name={"quantity-" + index}
+                            type="number"
+                            inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                        />
+                    </Grid>
+                </Grid>
             ))}
-            <Button onClick={addValue} color="primary"> Add </Button>
+            <Button onClick={addValue} color="primary"> Add Posting</Button>
         </Typography>
     )
 }

@@ -45,7 +45,6 @@ export default function AccountsList(props: any) {
         />
         <Autocomplete
             id={account}
-            sx={{ width: 300 }}
             open={open}
             onOpen={() => {
                 setOpen(true);
@@ -66,7 +65,7 @@ export default function AccountsList(props: any) {
                         ...params.InputProps,
                         endAdornment: (
                             <React.Fragment>
-                                {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                                {loading ? <CircularProgress color="inherit" /> : null}
                                 {params.InputProps.endAdornment}
                             </React.Fragment>
                         ),
