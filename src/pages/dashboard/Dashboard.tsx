@@ -66,16 +66,6 @@ function DashboardContent() {
                             </Paper>
                         </Grid>
                     </Grid>
-                    <Button
-                        variant="contained"
-                        component="label"
-                    >
-                        Upload File
-                        <input
-                            type="file"
-                            hidden
-                        />
-                    </Button>
                     <Copyright sx={{ pt: 4 }} />
                 </Container>
             </Box>
