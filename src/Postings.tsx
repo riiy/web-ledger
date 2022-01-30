@@ -1,6 +1,6 @@
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
-import { Container, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import AccountList from './AccountList';
 
 import Button from '@mui/material/Button';
@@ -26,9 +26,9 @@ export default function Postings(props: any) {
     };
 
     return (
-        <Typography>
+        <Box sx={{ pt: 1 }}>
             {values.map((jump, index) => (
-                <Grid container spacing={2}>
+                <Grid container spacing={2} sx={{ pt: 1 }} key={index}>
                     <Grid item xs={8}>
                         <AccountList cnt={index} />
                     </Grid>
@@ -47,6 +47,6 @@ export default function Postings(props: any) {
                 </Grid>
             ))}
             <Button onClick={addValue} color="primary"> Add Posting</Button>
-        </Typography>
+        </Box>
     )
 }

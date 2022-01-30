@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Hotkeys from 'react-hot-keys';
 import SignIn from "./pages/auth/SignIn"
 import SignUp from "./pages/auth/SignUp"
-import Dashboard from "./pages/dashboard/Dashboard"
+import Dashboard from "./pages/DashBoard/Dashboard"
 import { RequireAuth } from './useAuth'
 import { ApolloClient, ApolloProvider, InMemoryCache, HttpLink } from '@apollo/client';
 import AddTransactions from './AddTransction'
