@@ -10,8 +10,6 @@ import MenuItem from "@mui/material/MenuItem";
 import Modal from "@mui/material/Modal";
 import { useInsertTransactionMutation } from "./generated/graphql"
 import Postings from "./Postings";
-import Divider from '@mui/material/Divider';
-
 
 const style = {
     position: "absolute" as "absolute",
