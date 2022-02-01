@@ -4,6 +4,7 @@ import Hotkeys from 'react-hot-keys';
 import SignIn from "./pages/auth/SignIn"
 import SignUp from "./pages/auth/SignUp"
 import Dashboard from "./pages/DashBoard/Dashboard"
+import  FileUpload  from './pages/DashBoard/FileUpload';
 import { RequireAuth } from './useAuth'
 import { ApolloClient, ApolloProvider, InMemoryCache, HttpLink } from '@apollo/client';
 import AddTransactions from './AddTransction'
@@ -38,6 +39,7 @@ export default function App() {
                         <Route path="/" element={<Dashboard />} />
                         <Route path="/signin" element={<SignIn />} />
                         <Route path="/signup" element={<SignUp />} />
+                        <Route path="/file-upload" element={<FileUpload />} />
                         <Route
                             path="/dashboard"
                             element={

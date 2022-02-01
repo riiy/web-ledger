@@ -1233,7 +1233,7 @@
   resolved "https://registry.yarnpkg.com/@emotion/sheet/-/sheet-1.1.0.tgz#56d99c41f0a1cda2726a05aa6a20afd4c63e58d2"
   integrity sha512-u0AX4aSo25sMAygCuQTzS+HsImZFuS8llY8O7b9MDRzbJM0kVJlAz6KNDqcG7pOuQZJmj/8X/rAW+66kMnMW+g==
 
-"@emotion/styled@latest":
+"@emotion/styled@^11.3.0", "@emotion/styled@latest":
   version "11.6.0"
   resolved "https://registry.yarnpkg.com/@emotion/styled/-/styled-11.6.0.tgz#9230d1a7bcb2ebf83c6a579f4c80e0664132d81d"
   integrity sha512-mxVtVyIOTmCAkFbwIp+nCjTXJNgcz4VWkOYQro87jE2QBTydnkiYusMrRGFtzuruiGK4dDaNORk4gH049iiQuw==
@@ -1889,6 +1889,26 @@
     prop-types "^15.7.2"
     react-is "^17.0.2"
 
+"@mui/base@5.0.0-alpha.66":
+  version "5.0.0-alpha.66"
+  resolved "https://registry.npmmirror.com/@mui/base/-/base-5.0.0-alpha.66.tgz#5f03e641daecbc54a7b03d6368e625fef45cb7e4"
+  integrity sha512-LARfVx0HmGV5YwU2pdIqEApQwz/CtEnYtKkV856hlY0cgi5NQL2htzZ/9ujKz0j3LFUaMYiYuJ2AOwrNtGFGrw==
+  dependencies:
+    "@babel/runtime" "^7.16.7"
+    "@emotion/is-prop-valid" "^1.1.1"
+    "@mui/utils" "^5.3.0"
+    "@popperjs/core" "^2.4.4"
+    clsx "^1.1.1"
+    prop-types "^15.7.2"
+    react-is "^17.0.2"
+
+"@mui/icons-material@^5.0.1":
+  version "5.3.1"
+  resolved "https://registry.npmmirror.com/@mui/icons-material/-/icons-material-5.3.1.tgz#e0e0aecce5a86971dbaa46441d931a9c749a1c53"
+  integrity sha512-8zBWCaE8DHjIGZhGgMod92p6Rm38EhXrS+cZtaV0+jOTMeWh7z+mvswXzb/rVKc0ZYqw6mQYBcn2uEs2yclI9w==
+  dependencies:
+    "@babel/runtime" "^7.16.7"
+
 "@mui/icons-material@^5.2.5":
   version "5.2.5"
   resolved "https://registry.yarnpkg.com/@mui/icons-material/-/icons-material-5.2.5.tgz#c6575430b565c023232147934c45775630a53f02"
@@ -1914,6 +1934,24 @@
     react-is "^17.0.2"
     react-transition-group "^4.4.2"
     rifm "^0.12.1"
+
+"@mui/material@^5.0.2":
+  version "5.3.1"
+  resolved "https://registry.npmmirror.com/@mui/material/-/material-5.3.1.tgz#23c1e71b9cf995837ff5fdca34ac5052496861f5"
+  integrity sha512-XWPsJ2jet2zfnKojth5d2IaHIJPpJnHq1ACCSlNf898BjYh1j50gRWsPpIHiptQ0oc0pdWmMcmrXbdANKR1ybw==
+  dependencies:
+    "@babel/runtime" "^7.16.7"
+    "@mui/base" "5.0.0-alpha.66"
+    "@mui/system" "^5.3.0"
+    "@mui/types" "^7.1.0"
+    "@mui/utils" "^5.3.0"
+    "@types/react-transition-group" "^4.4.4"
+    clsx "^1.1.1"
+    csstype "^3.0.10"
+    hoist-non-react-statics "^3.3.2"
+    prop-types "^15.7.2"
+    react-is "^17.0.2"
+    react-transition-group "^4.4.2"
 
 "@mui/material@latest":
   version "5.2.8"
@@ -1969,6 +2007,20 @@
     "@emotion/cache" "^11.7.1"
     prop-types "^15.7.2"
 
+"@mui/system@^5.0.2", "@mui/system@^5.3.0":
+  version "5.3.0"
+  resolved "https://registry.npmmirror.com/@mui/system/download/@mui/system-5.3.0.tgz#cd2c5fd7631f2c90f0072c866015bb24e319b66e"
+  integrity sha512-mblz3EObrhhIMPwSEe2Az7MbMaXOFgrvItPOzZwcY5O9qERB7Rr8KQgbU8VouWLUqyV2i8BaFpLrkKPA6eX2Aw==
+  dependencies:
+    "@babel/runtime" "^7.16.7"
+    "@mui/private-theming" "^5.3.0"
+    "@mui/styled-engine" "^5.3.0"
+    "@mui/types" "^7.1.0"
+    "@mui/utils" "^5.3.0"
+    clsx "^1.1.1"
+    csstype "^3.0.10"
+    prop-types "^15.7.2"
+
 "@mui/system@^5.2.8":
   version "5.2.8"
   resolved "https://registry.yarnpkg.com/@mui/system/-/system-5.2.8.tgz#c8a7adff69b50fea8ec9cb20a1f5bdab33c247f5"
@@ -1979,20 +2031,6 @@
     "@mui/styled-engine" "^5.2.6"
     "@mui/types" "^7.1.0"
     "@mui/utils" "^5.2.3"
-    clsx "^1.1.1"
-    csstype "^3.0.10"
-    prop-types "^15.7.2"
-
-"@mui/system@^5.3.0":
-  version "5.3.0"
-  resolved "https://registry.npmmirror.com/@mui/system/download/@mui/system-5.3.0.tgz#cd2c5fd7631f2c90f0072c866015bb24e319b66e"
-  integrity sha512-mblz3EObrhhIMPwSEe2Az7MbMaXOFgrvItPOzZwcY5O9qERB7Rr8KQgbU8VouWLUqyV2i8BaFpLrkKPA6eX2Aw==
-  dependencies:
-    "@babel/runtime" "^7.16.7"
-    "@mui/private-theming" "^5.3.0"
-    "@mui/styled-engine" "^5.3.0"
-    "@mui/types" "^7.1.0"
-    "@mui/utils" "^5.3.0"
     clsx "^1.1.1"
     csstype "^3.0.10"
     prop-types "^15.7.2"
@@ -8974,6 +9012,17 @@ react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
+
+react-mui-fileuploader@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.npmmirror.com/react-mui-fileuploader/-/react-mui-fileuploader-0.1.2.tgz#c4272eaf31dfbf1ca07194499579cf623bdeea96"
+  integrity sha512-TmYFWPR8xlfHOX4KqyOmwofnoGolLnFde9FuWwAqPZQXoXaTcbNoOo5ZW24+Y8ulclidB0dz0uYBX0kzEFhb0Q==
+  dependencies:
+    "@emotion/styled" "^11.3.0"
+    "@mui/icons-material" "^5.0.1"
+    "@mui/material" "^5.0.2"
+    "@mui/system" "^5.0.2"
+    prop-types "^15.7.2"
 
 react-refresh@^0.11.0:
   version "0.11.0"
