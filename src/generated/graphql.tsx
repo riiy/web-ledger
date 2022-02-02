@@ -677,8 +677,8 @@ export type Postings = {
   comment?: Maybe<Scalars['String']>;
   created_at: Scalars['timestamptz'];
   /** An object relationship */
-  currency: Currency;
-  currency_id: Scalars['uuid'];
+  currency?: Maybe<Currency>;
+  currency_id?: Maybe<Scalars['uuid']>;
   id: Scalars['uuid'];
   quantity: Scalars['numeric'];
   /** An object relationship */
@@ -1306,6 +1306,11 @@ export type InsertTransactionMutationVariables = Exact<{
 
 export type InsertTransactionMutation = { __typename?: 'mutation_root', insert_transactions?: { __typename?: 'transactions_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'transactions', id: any, trans_date?: any | null | undefined }> } | null | undefined };
 
+export type PostingsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type PostingsQuery = { __typename?: 'query_root', postings: Array<{ __typename?: 'postings', quantity: any, id: any, transaction: { __typename?: 'transactions', trans_date?: any | null | undefined }, account: { __typename?: 'accounts', alias_name?: string | null | undefined, name?: any | null | undefined } }> };
+
 
 export const AccountsDocument = gql`
     query ACCOUNTS {
@@ -1392,3 +1397,45 @@ export function useInsertTransactionMutation(baseOptions?: Apollo.MutationHookOp
 export type InsertTransactionMutationHookResult = ReturnType<typeof useInsertTransactionMutation>;
 export type InsertTransactionMutationResult = Apollo.MutationResult<InsertTransactionMutation>;
 export type InsertTransactionMutationOptions = Apollo.BaseMutationOptions<InsertTransactionMutation, InsertTransactionMutationVariables>;
+export const PostingsDocument = gql`
+    query Postings {
+  postings {
+    transaction {
+      trans_date
+    }
+    quantity
+    id
+    account {
+      alias_name
+      name
+    }
+  }
+}
+    `;
+
+/**
+ * __usePostingsQuery__
+ *
+ * To run a query within a React component, call `usePostingsQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePostingsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePostingsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function usePostingsQuery(baseOptions?: Apollo.QueryHookOptions<PostingsQuery, PostingsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PostingsQuery, PostingsQueryVariables>(PostingsDocument, options);
+      }
+export function usePostingsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PostingsQuery, PostingsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PostingsQuery, PostingsQueryVariables>(PostingsDocument, options);
+        }
+export type PostingsQueryHookResult = ReturnType<typeof usePostingsQuery>;
+export type PostingsLazyQueryHookResult = ReturnType<typeof usePostingsLazyQuery>;
+export type PostingsQueryResult = Apollo.QueryResult<PostingsQuery, PostingsQueryVariables>;
