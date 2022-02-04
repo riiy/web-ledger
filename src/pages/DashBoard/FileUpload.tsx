@@ -55,12 +55,9 @@ function UploadButtons() {
 }
 
 export default function App() {
-
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
-            <AppBar pagename='dashboard' />
-            <Drawer />
             <Box
                 component="main"
                 sx={{

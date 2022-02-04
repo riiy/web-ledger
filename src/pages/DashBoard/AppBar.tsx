@@ -32,12 +32,12 @@ const AppBar = styled(MuiAppBar, {
 
 interface InterProps {
     pagename: string;
+    open?: boolean;
+    toggleDrawer: any;
 }
 export default function Index(props: InterProps) {
-    const [open, setOpen] = React.useState(true);
-    const toggleDrawer = () => {
-        setOpen(!open);
-    };
+    const open = props.open;
+    const toggleDrawer = props.toggleDrawer
     return (<AppBar position="absolute" open={open}>
         <Toolbar
             sx={{
@@ -66,7 +66,7 @@ export default function Index(props: InterProps) {
                 {props.pagename}
             </Typography>
             <IconButton color="inherit">
-                <Badge badgeContent={4} color="secondary">
+                <Badge badgeContent={1} color="secondary">
                     <NotificationsIcon />
                 </Badge>
             </IconButton>

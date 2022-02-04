@@ -13,11 +13,15 @@ import AppBar from './AppBar';
 import Drawer from './Drawer'
 
 function DashboardContent() {
+    const [open, setOpen] = React.useState(true);
+    const toggleDrawer = () => {
+        setOpen(!open);
+    };
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
-            <AppBar pagename='dashboard' />
-            <Drawer />
+            <AppBar toggleDrawer={toggleDrawer} pagename='dashboard' open={open}/>
+            <Drawer toggleDrawer={toggleDrawer} open={open}/>
             <Box
                 component="main"
                 sx={{

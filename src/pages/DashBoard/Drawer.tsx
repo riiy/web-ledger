@@ -33,11 +33,13 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
         },
     }),
 );
-export default function Index() {
-    const [open, setOpen] = React.useState(true);
-    const toggleDrawer = () => {
-        setOpen(!open);
-    };
+interface InterProps {
+    toggleDrawer: any;
+    open?: boolean;
+}
+export default function Index(props: InterProps) {
+    const toggleDrawer = props.toggleDrawer
+    let open =props.open
     return (
         <Drawer variant="permanent" open={open}>
             <Toolbar
